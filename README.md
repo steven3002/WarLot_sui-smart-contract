@@ -17,7 +17,15 @@ Welcome to **Warlot**, a modular and decentralized data management system built 
 - 🔒 Secure storage using `UID` & `TxContext`  
 
 ---
+## ⚙️ Package
+```rust
+ PackageID: 0x7f905a1f764029161b45c66e90420e4fa7e936b3d05f24ae31de82ce1d0e0b89                 
+│  │ Version: 1                                                                                    │
+│  │ Digest: CUVVYRfC7mZ6dhTz1FK3DFL8xskYmEDBS7oucFvhsNGM                                          │
+│  │ Modules: bucketmain, filemain, projectmain, tablemain, warlotpackage   
+```
 
+---
 ## 📦 Modules Breakdown
 
 ### `projectobject.move` 🧱  
