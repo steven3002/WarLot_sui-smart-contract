@@ -177,5 +177,4 @@ public fun update_cell(
 public fun check_col_label(project: &mut Project, table_name: String, col_label: String): bool {
     let table = get_table(project, table_name);
     tablemain::check_col_label(table, col_label)
-
 }
