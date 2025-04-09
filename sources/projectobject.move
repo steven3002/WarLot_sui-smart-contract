@@ -86,25 +86,6 @@ public fun create_file(
 
 
 }
-//===== Table to project =======//
-
-public fun add_table(project: &mut Project,  table: Table ){
-    let name =  table.get_name();
-    assert!(!project.check_name_created(name), InvalidName);
-
-    dfield::add<String, Table>(&mut project.id, name,  table);
-}
-
-public fun check_name_created(project: &Project, name: String): bool{
-    dfield::exists_(&project.id, name)
-}
-
-public fun get_table(
-    project: &mut Project, 
-    name: String,
-): &mut Table{
-    dfield::borrow_mut<String, Table>(&mut project.id, name)
-}
 
 
 
@@ -126,4 +107,75 @@ public fun check_bucket_name_created(project: &Project, name: String): bool{
 public fun get_bucket(project: &mut Project, name: String): &mut Bucket{
     assert!(check_bucket_name_created(project, name));
     ofields::borrow_mut<String, Bucket>(&mut project.id, name)
+}
+
+
+
+
+
+// ====== table editor ======== // 
+//===== Table to project =======//
+
+public fun add_table(project: &mut Project,  table: Table ){
+    let name =  table.get_name();
+    assert!(!project.check_name_created(name), InvalidName);
+
+    dfield::add<String, Table>(&mut project.id, name,  table);
+}
+
+public fun check_name_created(project: &Project, name: String): bool{
+    dfield::exists_(&project.id, name)
+}
+
+public fun get_table(
+    project: &mut Project, 
+    name: String,
+): &mut Table{
+    dfield::borrow_mut<String, Table>(&mut project.id, name)
+}
+
+
+public fun add_col(project: &mut Project, table_name: String, col_label: String ){
+    let table = get_table(project, table_name);
+    tablemain::add_col(table, col_label);
+}
+
+public fun add_data_to_table(
+    project: &mut Project,
+    table_name: String,
+    col_labels: vector<String>,
+    col_indexes: vector<u64>,
+    row_values: vector<String>,
+    clock: &Clock
+){
+    let table = get_table(project, table_name);
+    tablemain::add_data_to_table(table, col_labels, col_indexes, row_values, clock);
+}
+
+public fun add_row(
+    project: &mut Project,
+    table_name: String, 
+    col_labels: vector<String>,
+    col_values: vector<String>,
+    clock: &Clock){
+    let table = get_table(project, table_name);
+    tablemain::add_row(table, col_labels, col_values, clock);
+}
+
+public fun update_cell(
+    project: &mut Project,
+    table_name: String,
+    label: String,
+    row_index: u64,
+    new_value: String,
+    clock: &Clock
+){
+    let table = get_table(project, table_name);
+    tablemain::update_cell(table, label, row_index, new_value, clock);
+}
+
+public fun check_col_label(project: &mut Project, table_name: String, col_label: String): bool {
+    let table = get_table(project, table_name);
+    tablemain::check_col_label(table, col_label)
+
 }
