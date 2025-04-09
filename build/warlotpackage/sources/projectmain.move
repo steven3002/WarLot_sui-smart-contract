@@ -48,11 +48,10 @@ public fun create_bucket(
 public fun create_table(
     project: &mut Project,
     name: String,
-    table_blobid: String, 
-    table_blob_object_id: String, 
+    rows: u64,
     clock: &Clock,
     ctx: &mut TxContext){
-    let table: Table = tablemain::create(name, table_blobid, table_blob_object_id, clock, ctx);
+    let table: Table = tablemain::create(name, rows, clock, ctx);
     project.add_table(table);
 }
 
@@ -107,21 +106,6 @@ public fun get_table(
     dfield::borrow_mut<String, Table>(&mut project.id, name)
 }
 
-public fun modify_table(
-    project: &mut Project, 
-    name: String,
-    table_blobid: String, 
-    table_blob_object_id: String, 
-    clock: &Clock
-){
-    let table: &mut Table = project.get_table(name);
-    table.update(
-        table_blobid,
-        table_blob_object_id,
-        clock,
-    );
-  
-}
 
 
 
