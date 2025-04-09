@@ -19,10 +19,12 @@ Welcome to **Warlot**, a modular and decentralized data management system built 
 ---
 ## ⚙️ Package
 ```rust
- PackageID: 0x7f905a1f764029161b45c66e90420e4fa7e936b3d05f24ae31de82ce1d0e0b89                 
+ ┌──                                                                                             
+│  │ PackageID: 0xb36850b7be519d714d0cc17f67e361db37387c5bf4974bb867748bcab1de15d4                 │
 │  │ Version: 1                                                                                    │
-│  │ Digest: CUVVYRfC7mZ6dhTz1FK3DFL8xskYmEDBS7oucFvhsNGM                                          │
-│  │ Modules: bucketmain, filemain, projectmain, tablemain, warlotpackage   
+│  │ Digest: FvyNZF93oetYUhhRw7Xe8UM2F2fekwbaicjQdCZVTcUW                                          │
+│  │ Modules: bucketmain, filemain, projectmain, tablemain, warlotpackage                          │
+│  └──                                                                          
 ```
 
 ---
