@@ -24,7 +24,7 @@ const EInvalidData: vector<u8> = b"enter valid dataset";
 
 public fun create(
     name: String,
-     rows: u64,
+    rows: u64,
     clock: &Clock,
     ctx: &mut TxContext): Table{
 
