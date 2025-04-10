@@ -1,12 +1,14 @@
 module warlotpackage::projectmain;
 use sui::clock::Clock;
 use sui::dynamic_object_field as ofields;
-use sui::dynamic_field as dfield;
 use warlotpackage::tablemain::{Self, Table};
 use warlotpackage::bucketmain::{Self, Bucket};
 use warlotpackage::filemain::{Self, FileMeta};
 use std::string::{String};
 
+
+// project istance is being owned by the user 
+// allowing the sdk to get all the one the user has created
 public struct Project has key, store{
     id: UID,
     name: String,
@@ -16,8 +18,9 @@ public struct Project has key, store{
 
 
 //======errors ======//
-#[error]
-const InvalidName: vector<u8> = b"name has been created, enter another name";
+// #[error]
+// const InvalidName: vector<u8> = b"name has been created, enter another name";
+
 
 
 #[allow(lint(self_transfer))]
@@ -41,6 +44,7 @@ public fun create_bucket(
     description: String, 
     clock: &Clock, 
     ctx: &mut TxContext){
+
     let bucket: Bucket = bucketmain::create(name, description, clock, ctx);
     project.add_bucket(bucket);
 }
@@ -94,7 +98,7 @@ public fun create_file(
 //========= Bucket ========//
 public fun add_bucket(project: &mut Project, bucket: Bucket){
     let name = bucket.get_name();
-    assert!(!check_bucket_name_created(project, name));
+    // assert!(!check_bucket_name_created(project, name));
     ofields::add<String, Bucket>(&mut project.id, name , bucket);
 }
 
@@ -118,20 +122,20 @@ public fun get_bucket(project: &mut Project, name: String): &mut Bucket{
 
 public fun add_table(project: &mut Project,  table: Table ){
     let name =  table.get_name();
-    assert!(!project.check_name_created(name), InvalidName);
+    // assert!(!project.check_name_created(name), InvalidName);
 
-    dfield::add<String, Table>(&mut project.id, name,  table);
+    ofields::add<String, Table>(&mut project.id, name,  table);
 }
 
 public fun check_name_created(project: &Project, name: String): bool{
-    dfield::exists_(&project.id, name)
+    ofields::exists_(&project.id, name)
 }
 
 public fun get_table(
     project: &mut Project, 
     name: String,
 ): &mut Table{
-    dfield::borrow_mut<String, Table>(&mut project.id, name)
+    ofields::borrow_mut<String, Table>(&mut project.id, name)
 }
 
 
