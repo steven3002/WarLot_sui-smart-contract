@@ -17,7 +17,7 @@ edition = "2024.beta" # edition = "legacy" to use legacy (pre-2024) Move
 # Override = { local = "../conflicting/version", override = true }
 
 [addresses]
-warlotpackage = "0x0"
+warlotpackage = "0x90a4dbfcfb4762416a81436e54fbf3ebba1cd5729c06705ed10ea66da547d704"
 projectmain = "0x0"
 tablemain = "0x0"
 filemain = "0x0"
