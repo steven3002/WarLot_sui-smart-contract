@@ -18,8 +18,8 @@ public struct Project has key, store{
 
 
 //======errors ======//
-#[error]
-const InvalidName: vector<u8> = b"name has been created, enter another name";
+// #[error]
+// const InvalidName: vector<u8> = b"name has been created, enter another name";
 
 
 
@@ -49,15 +49,32 @@ public fun create_bucket(
     project.add_bucket(bucket);
 }
 
+
 public fun create_table(
     project: &mut Project,
     name: String,
-    rows: u64,
+    cache_obj: address,
+    cache_file: String,
     clock: &Clock,
     ctx: &mut TxContext){
-    let table: Table = tablemain::create(name, rows, clock, ctx);
+    let table: Table = tablemain::create(name, cache_obj, cache_file, clock, ctx);
     project.add_table(table);
 }
+
+
+
+public fun update_table(
+    project: &mut Project,
+    table_name: String, 
+    cache_obj: address,
+    cache_file: String,
+    clock: &Clock
+){
+    let table = get_table(project, table_name);
+    tablemain::update( table, cache_obj, cache_file, clock);
+}
+
+
 
 public fun create_file(
     project: &mut Project,
@@ -138,47 +155,3 @@ public fun get_table(
     ofields::borrow_mut<String, Table>(&mut project.id, name)
 }
 
-
-public fun add_col(project: &mut Project, table_name: String, col_label: String ){
-    let table = get_table(project, table_name);
-    tablemain::add_col(table, col_label);
-}
-
-public fun add_data_to_table(
-    project: &mut Project,
-    table_name: String,
-    col_labels: vector<String>,
-    col_indexes: vector<u64>,
-    row_values: vector<String>,
-    clock: &Clock
-){
-    let table = get_table(project, table_name);
-    tablemain::add_data_to_table(table, col_labels, col_indexes, row_values, clock);
-}
-
-public fun add_row(
-    project: &mut Project,
-    table_name: String, 
-    col_labels: vector<String>,
-    col_values: vector<String>,
-    clock: &Clock){
-    let table = get_table(project, table_name);
-    tablemain::add_row(table, col_labels, col_values, clock);
-}
-
-public fun update_cell(
-    project: &mut Project,
-    table_name: String,
-    label: String,
-    row_index: u64,
-    new_value: String,
-    clock: &Clock
-){
-    let table = get_table(project, table_name);
-    tablemain::update_cell(table, label, row_index, new_value, clock);
-}
-
-public fun check_col_label(project: &mut Project, table_name: String, col_label: String): bool {
-    let table = get_table(project, table_name);
-    tablemain::check_col_label(table, col_label)
-}
