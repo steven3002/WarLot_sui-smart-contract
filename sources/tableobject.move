@@ -20,7 +20,7 @@ public fun create(
 
     let table = Table{
         id: object::new(ctx),
-        name: name,
+        name,
         time_created: clock.timestamp_ms(),
         last_updated: clock.timestamp_ms(),
         cache_obj,

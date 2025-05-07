@@ -27,8 +27,8 @@ public struct Project has key, store{
 public fun create_project(name: String, description: String, clock: &Clock, ctx: &mut TxContext){
     let project =  Project{
         id: object::new(ctx),
-        name: name,
-        description: description,
+        name,
+        description,
        time_created: clock.timestamp_ms(),
     };
 
@@ -84,8 +84,7 @@ public fun create_file(
     blod_id: String,
     blob_object_id: address,
     bucket: String, 
-    uploaded_epoch: u64,
-    expires_at: u64,
+    blob_settings: address,
     clock: &Clock,
     ctx: &mut TxContext
 ){
@@ -96,8 +95,7 @@ public fun create_file(
         blod_id, 
         blob_object_id, 
         bucket, 
-        uploaded_epoch, 
-        expires_at, 
+        blob_settings,
         clock, 
         ctx
         );

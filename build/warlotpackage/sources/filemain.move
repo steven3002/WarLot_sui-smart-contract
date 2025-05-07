@@ -13,8 +13,7 @@ public struct FileMeta has key, store {
  blob_object_id: address,
  bucket: String, 
  time_created: u64,
- uploaded_epoch: u64,
-    expires_at: u64,
+ blob_settings: address,
  }
 
 public fun create(
@@ -24,23 +23,22 @@ public fun create(
     blod_id: String,
     blob_object_id: address,
     bucket: String, 
-    uploaded_epoch: u64,
-    expires_at: u64,
+     blob_settings: address,
     clock: &Clock,
     ctx: &mut TxContext
 ): FileMeta{
     let file = FileMeta{
         id : object::new(ctx),
-        name : name,
-        description: description,
-        file_type: file_type,
+        name,
+        description,
+        file_type,
         uploader: ctx.sender(),
-        blod_id: blod_id,
-        blob_object_id: blob_object_id,
-        bucket: bucket,
+        blod_id,
+        blob_object_id,
+        bucket,
         time_created: clock.timestamp_ms(),
-        uploaded_epoch: uploaded_epoch,
-        expires_at : expires_at,
+        blob_settings,
+
     };
 
 

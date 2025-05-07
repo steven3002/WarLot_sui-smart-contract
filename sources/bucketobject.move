@@ -24,8 +24,8 @@ public fun create(
     ctx: &mut TxContext): Bucket{
     let bucket =  Bucket{
         id: object::new(ctx),
-        name: name,
-        description: description,
+        name,
+        description,
        time_created: clock.timestamp_ms(),
     };
 
